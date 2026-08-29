@@ -1,5 +1,14 @@
 import React, { useState } from "react";
-import { X, Plus, Camera, IndianRupee, ArrowRight, MessageCircle, QrCode } from "lucide-react";
+import {
+  X,
+  Plus,
+  Camera,
+  IndianRupee,
+  ArrowRight,
+  MessageCircle,
+  QrCode,
+  Check,
+} from "lucide-react";
 import { STAGES, STAGE_LABEL, TRADES } from "../data/trades";
 import { useStore } from "../store";
 
@@ -10,6 +19,8 @@ export default function JobDetail({ jobId, onClose }) {
     moveJob,
     addMaterial,
     setLabor,
+    addLaborPreset,
+    markPaid,
     upiId,
     setUpiId,
     businessName,
@@ -101,6 +112,22 @@ export default function JobDetail({ jobId, onClose }) {
                 <p className="text-xs text-steel/50">No materials added yet.</p>
               )}
             </div>
+
+            {/* One-tap presets — fast-track field quoting, no typing needed */}
+            {t.commonMaterials?.length > 0 && (
+              <div className="flex flex-wrap gap-1.5 mb-2.5">
+                {t.commonMaterials.map((cm) => (
+                  <button
+                    key={cm.name}
+                    onClick={() => addMaterial(job.id, cm.name, 1, cm.unitCost)}
+                    className="text-[11px] bg-boneDim hover:bg-safety/15 hover:text-safetyDeep border border-line rounded-full px-2.5 py-1 text-charcoal/70 transition-colors"
+                  >
+                    + {cm.name} <span className="text-steel">₹{cm.unitCost}</span>
+                  </button>
+                ))}
+              </div>
+            )}
+
             <div className="flex gap-1.5">
               <input
                 value={matName}
@@ -134,6 +161,19 @@ export default function JobDetail({ jobId, onClose }) {
             <p className="font-mono text-[10px] tracking-[0.15em] uppercase text-steel mb-2.5">
               Labor cost
             </p>
+            {t.laborPresets?.length > 0 && (
+              <div className="flex flex-wrap gap-1.5 mb-2.5">
+                {t.laborPresets.map((lp) => (
+                  <button
+                    key={lp.label}
+                    onClick={() => addLaborPreset(job.id, lp.amount)}
+                    className="text-[11px] bg-boneDim hover:bg-safety/15 hover:text-safetyDeep border border-line rounded-full px-2.5 py-1 text-charcoal/70 transition-colors"
+                  >
+                    + {lp.label} <span className="text-steel">₹{lp.amount}</span>
+                  </button>
+                ))}
+              </div>
+            )}
             <div className="flex items-center gap-2">
               <IndianRupee size={14} className="text-steel" />
               <input
@@ -142,6 +182,9 @@ export default function JobDetail({ jobId, onClose }) {
                 onChange={(e) => setLabor(job.id, Number(e.target.value) || 0)}
                 className="w-32 border border-line rounded-sm px-2 py-1.5 text-sm focus:border-safety"
               />
+              <span className="text-[11px] text-steel/60">
+                tap presets above to add, or edit directly
+              </span>
             </div>
           </div>
 
@@ -220,6 +263,21 @@ export default function JobDetail({ jobId, onClose }) {
                 Add your UPI ID above to enable direct payment requests.
               </p>
             )}
+
+            <button
+              onClick={() => markPaid(job.id, !job.paidAt)}
+              className={[
+                "w-full mt-2 flex items-center justify-center gap-1.5 rounded-sm py-2 text-xs font-medium border transition-colors",
+                job.paidAt
+                  ? "bg-ok/10 border-ok text-ok"
+                  : "bg-white border-line text-steel hover:border-ok hover:text-ok",
+              ].join(" ")}
+            >
+              <Check size={14} />
+              {job.paidAt
+                ? `Paid via UPI · ${new Date(job.paidAt).toLocaleString("en-IN", { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" })}`
+                : "Mark as Paid via UPI"}
+            </button>
           </div>
         </div>
 

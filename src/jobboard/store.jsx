@@ -29,6 +29,7 @@ export function StoreProvider({ children }) {
         laborCost: 0,
         materialsTotal: 0,
         photos: 0,
+        paidAt: null,
         createdAt: new Date().toISOString().slice(0, 10),
       },
     ]);
@@ -39,15 +40,40 @@ export function StoreProvider({ children }) {
     setJobs((prev) =>
       prev.map((j) => {
         if (j.id !== jobId) return j;
-        const materials = [...j.materials, { id: `m${Date.now()}`, name, qty, unitCost }];
+        const existing = j.materials.find((m) => m.name === name && m.unitCost === unitCost);
+        const materials = existing
+          ? j.materials.map((m) => (m === existing ? { ...m, qty: m.qty + qty } : m))
+          : [...j.materials, { id: `m${Date.now()}`, name, qty, unitCost }];
         const materialsTotal = materials.reduce((sum, m) => sum + m.qty * m.unitCost, 0);
         return { ...j, materials, materialsTotal };
       }),
     );
   }, []);
 
+  const addLaborPreset = useCallback((jobId, amount) => {
+    setJobs((prev) =>
+      prev.map((j) => (j.id === jobId ? { ...j, laborCost: j.laborCost + amount } : j)),
+    );
+  }, []);
+
   const setLabor = useCallback((jobId, laborCost) => {
     setJobs((prev) => prev.map((j) => (j.id === jobId ? { ...j, laborCost } : j)));
+  }, []);
+
+  // Single-tap "paid" toggle — real pattern for closing the loop once a UPI
+  // request has been sent, instead of a separate reconciliation step.
+  const markPaid = useCallback((jobId, paid) => {
+    setJobs((prev) =>
+      prev.map((j) =>
+        j.id === jobId
+          ? {
+              ...j,
+              paidAt: paid ? new Date().toISOString() : null,
+              stage: paid ? "invoiced" : j.stage,
+            }
+          : j,
+      ),
+    );
   }, []);
 
   const value = {
@@ -58,6 +84,8 @@ export function StoreProvider({ children }) {
     addJob,
     addMaterial,
     setLabor,
+    addLaborPreset,
+    markPaid,
     upiId,
     setUpiId,
     businessName,

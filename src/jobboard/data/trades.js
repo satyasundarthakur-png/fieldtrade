@@ -15,6 +15,20 @@ export const TRADES = {
     jobLabel: "Job",
     jobUnit: "point / circuit",
     materialCategories: ["Wiring", "Switches & sockets", "MCBs / DBs", "Conduit", "Fixtures"],
+    commonMaterials: [
+      { name: "2.5mm Wire (per meter)", unitCost: 18 },
+      { name: "16A Switch", unitCost: 45 },
+      { name: "MCB Box (single)", unitCost: 320 },
+      { name: "Modular socket", unitCost: 85 },
+      { name: "PVC conduit pipe (per meter)", unitCost: 25 },
+      { name: "LED batten (4ft)", unitCost: 280 },
+    ],
+    laborPresets: [
+      { label: "Per point", amount: 250 },
+      { label: "Per circuit", amount: 600 },
+      { label: "Diagnostic visit", amount: 300 },
+      { label: "Hourly rate", amount: 400 },
+    ],
     mindset:
       "Safety is the organizing principle of everything — a mistake here can kill someone, not just cost money. That produces methodical, rule-bound caution that's earned, not rigid. Thinks in circuits and systems: cause and effect is immediate and physical.",
     skills: [
@@ -42,6 +56,20 @@ export const TRADES = {
     jobLabel: "Job",
     jobUnit: "fixture / line",
     materialCategories: ["Pipes (CPVC/PVC)", "Fittings", "Taps & faucets", "Valves", "Sealant"],
+    commonMaterials: [
+      { name: '0.75" PVC elbow', unitCost: 15 },
+      { name: "Teflon tape", unitCost: 10 },
+      { name: "CPVC pipe (per meter)", unitCost: 60 },
+      { name: 'Ball valve 0.5"', unitCost: 120 },
+      { name: "Basin tap", unitCost: 450 },
+      { name: "Flexible connector hose", unitCost: 90 },
+    ],
+    laborPresets: [
+      { label: "Per fixture", amount: 300 },
+      { label: "Leak repair visit", amount: 350 },
+      { label: "Diagnostic visit", amount: 250 },
+      { label: "Hourly rate", amount: 400 },
+    ],
     mindset:
       "Usually called when something is already going wrong — a leak, a blockage — so there's urgency and calm-under-mess. Practical, unsentimental, comfortable in cramped and awkward spaces. Thinks several steps ahead because plumbing systems are hidden and interconnected.",
     skills: [
@@ -69,6 +97,20 @@ export const TRADES = {
     jobLabel: "Vehicle Job",
     jobUnit: "service item",
     materialCategories: ["Engine parts", "Filters & fluids", "Brakes", "Electricals", "Tyres"],
+    commonMaterials: [
+      { name: "Engine oil (per liter)", unitCost: 450 },
+      { name: "Oil filter", unitCost: 220 },
+      { name: "Air filter", unitCost: 350 },
+      { name: "Brake pad set", unitCost: 900 },
+      { name: "Spark plug", unitCost: 180 },
+      { name: "Coolant (per liter)", unitCost: 300 },
+    ],
+    laborPresets: [
+      { label: "Per service item", amount: 200 },
+      { label: "Diagnostic check", amount: 300 },
+      { label: "Full service labor", amount: 800 },
+      { label: "Hourly rate", amount: 350 },
+    ],
     mindset:
       "Diagnostic and systems-thinking, closer to a doctor's differential diagnosis than people expect — a symptom rarely points to one obvious cause. Comfortable with early ambiguity, wants certainty before expensive work. Builds strong brand/model pattern memory through repetition.",
     skills: [
@@ -95,6 +137,20 @@ export const TRADES = {
     jobLabel: "Job",
     jobUnit: "piece / unit",
     materialCategories: ["Plywood/MDF", "Laminate", "Hardware", "Adhesive", "Finish/polish"],
+    commonMaterials: [
+      { name: "18mm plywood (sq. ft.)", unitCost: 110 },
+      { name: "Laminate sheet (sq. ft.)", unitCost: 65 },
+      { name: "Cabinet hinge", unitCost: 40 },
+      { name: "Drawer channel (pair)", unitCost: 180 },
+      { name: "Fevicol/adhesive (kg)", unitCost: 220 },
+      { name: "Edge banding (per meter)", unitCost: 12 },
+    ],
+    laborPresets: [
+      { label: "Per piece/unit", amount: 500 },
+      { label: "Site visit & measurement", amount: 200 },
+      { label: "Installation labor", amount: 800 },
+      { label: "Hourly rate", amount: 350 },
+    ],
     mindset:
       "Precision paired with material intuition — wood behaves differently by grain, moisture, and age, so a good carpenter reads the material as much as executes a plan. Patient with iterative fitting rather than expecting a perfect first cut.",
     skills: [
@@ -121,6 +177,20 @@ export const TRADES = {
     jobLabel: "Job",
     jobUnit: "meter / joint",
     materialCategories: ["MS/SS sheet", "Rods/electrodes", "Gas", "Grinding discs", "Paint/primer"],
+    commonMaterials: [
+      { name: "MS square pipe (per meter)", unitCost: 140 },
+      { name: "Welding rod (per kg)", unitCost: 200 },
+      { name: "Grinding disc", unitCost: 60 },
+      { name: "Primer (per liter)", unitCost: 250 },
+      { name: "SS sheet (sq. ft.)", unitCost: 320 },
+      { name: "Hinges (heavy duty)", unitCost: 150 },
+    ],
+    laborPresets: [
+      { label: "Per meter/joint", amount: 180 },
+      { label: "Site visit", amount: 250 },
+      { label: "Fabrication labor", amount: 700 },
+      { label: "Hourly rate", amount: 400 },
+    ],
     mindset:
       "High-consequence precision under physical strain — heat, sparks, fumes make the danger immediate and visible, producing a safety-drilled, checklist-following temperament. Weld quality is personal and craftsman-like; a bad weld is visible and a point of professional pride.",
     skills: [
@@ -152,6 +222,20 @@ export const TRADES = {
       "Compressor parts",
       "Insulation",
     ],
+    commonMaterials: [
+      { name: "R32 gas refill (per kg)", unitCost: 650 },
+      { name: "AC filter (standard)", unitCost: 300 },
+      { name: "Copper piping (per meter)", unitCost: 380 },
+      { name: "Insulation tape roll", unitCost: 80 },
+      { name: "PCB board (universal)", unitCost: 1200 },
+      { name: "Stabilizer (AC-rated)", unitCost: 1800 },
+    ],
+    laborPresets: [
+      { label: "Per unit service", amount: 500 },
+      { label: "Annual maintenance visit", amount: 400 },
+      { label: "Installation labor", amount: 1200 },
+      { label: "Hourly rate", amount: 400 },
+    ],
     mindset:
       "Systematic and maintenance-minded — a large share of the work is preventive (annual servicing), so HVAC techs think in service cycles more than reactive trades do. Season-driven workload creates intense summer peaks and slower off-season stretches.",
     skills: [
@@ -178,6 +262,20 @@ export const TRADES = {
     jobLabel: "Job",
     jobUnit: "sq. ft.",
     materialCategories: ["Emulsion paint", "Primer", "Putty", "Brushes/rollers", "Masking/tape"],
+    commonMaterials: [
+      { name: "Emulsion paint (per liter)", unitCost: 280 },
+      { name: "Primer (per liter)", unitCost: 220 },
+      { name: "Wall putty (per kg)", unitCost: 35 },
+      { name: "Masking tape roll", unitCost: 45 },
+      { name: "Roller set", unitCost: 150 },
+      { name: "Sandpaper sheet", unitCost: 15 },
+    ],
+    laborPresets: [
+      { label: "Per sq. ft.", amount: 18 },
+      { label: "Site visit & estimate", amount: 150 },
+      { label: "Prep labor (per room)", amount: 500 },
+      { label: "Hourly rate", amount: 300 },
+    ],
     mindset:
       "Patience with process and surface prep — the unglamorous prep work (sanding, puttying, masking) determines the visible finish. Estimation-minded: sq. ft. and paint-quantity calculation is a daily core skill, not an afterthought.",
     skills: [
