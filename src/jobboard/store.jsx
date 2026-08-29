@@ -33,6 +33,7 @@ export function StoreProvider({ children }) {
         diagnosticFee: 0,
         riskTags: [],
         checklist: { preJob: {}, completion: {} },
+        requiredSkills: [],
         createdAt: new Date().toISOString().slice(0, 10),
       },
     ]);
@@ -116,6 +117,21 @@ export function StoreProvider({ children }) {
     );
   }, []);
 
+  // Required-skill tagging — what this specific job demands, distinct from
+  // the trade's general skill list shown in the profile panel.
+  const toggleJobSkill = useCallback((jobId, skill) => {
+    setJobs((prev) =>
+      prev.map((j) => {
+        if (j.id !== jobId) return j;
+        const requiredSkills = j.requiredSkills || [];
+        const next = requiredSkills.includes(skill)
+          ? requiredSkills.filter((s) => s !== skill)
+          : [...requiredSkills, skill];
+        return { ...j, requiredSkills: next };
+      }),
+    );
+  }, []);
+
   // Single-tap "paid" toggle — real pattern for closing the loop once a UPI
   // request has been sent, instead of a separate reconciliation step.
   const markPaid = useCallback((jobId, paid) => {
@@ -145,6 +161,7 @@ export function StoreProvider({ children }) {
     setDiagnosticFee,
     toggleRiskTag,
     toggleChecklistItem,
+    toggleJobSkill,
     markPaid,
     upiId,
     setUpiId,

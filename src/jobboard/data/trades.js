@@ -81,6 +81,16 @@ export const TRADES = {
     ],
     mindset:
       "Safety is the organizing principle of everything — a mistake here can kill someone, not just cost money. That produces methodical, rule-bound caution that's earned, not rigid. Thinks in circuits and systems: cause and effect is immediate and physical.",
+    skillGroups: [
+      {
+        category: "Diagnostics & Testing",
+        skills: ["Load calculation", "Phase balancing", "Circuit tracing", "Earth fault testing"],
+      },
+      {
+        category: "Execution & Wiring",
+        skills: ["Conduit routing", "DB panel dressing", "Inverter setup", "Short-circuit repair"],
+      },
+    ],
     skills: [
       "Wiring diagrams & load calculations",
       "Electrical code compliance",
@@ -167,6 +177,16 @@ export const TRADES = {
     ],
     mindset:
       "Usually called when something is already going wrong — a leak, a blockage — so there's urgency and calm-under-mess. Practical, unsentimental, comfortable in cramped and awkward spaces. Thinks several steps ahead because plumbing systems are hidden and interconnected.",
+    skillGroups: [
+      {
+        category: "Diagnostics & Testing",
+        skills: ["Hydrostatic pressure testing", "Concealed leak detection", "Pipe sizing"],
+      },
+      {
+        category: "Execution & Fitting",
+        skills: ["Sanitary slope alignment", "Thread sealing", "Fixture installation"],
+      },
+    ],
     skills: [
       "Pipe-fitting & joining",
       "Leak diagnosis",
@@ -251,6 +271,16 @@ export const TRADES = {
     ],
     mindset:
       "Diagnostic and systems-thinking, closer to a doctor's differential diagnosis than people expect — a symptom rarely points to one obvious cause. Comfortable with early ambiguity, wants certainty before expensive work. Builds strong brand/model pattern memory through repetition.",
+    skillGroups: [
+      {
+        category: "Diagnostics",
+        skills: ["OBD-II scanning", "Compression test", "Brake thickness inspection"],
+      },
+      {
+        category: "Repair & Fitment",
+        skills: ["Brake pad replacement", "Suspension overhaul", "Timing belt alignment"],
+      },
+    ],
     skills: [
       "Engine & drivetrain diagnostics",
       "OBD/diagnostic code reading",
@@ -335,6 +365,16 @@ export const TRADES = {
     ],
     mindset:
       "Precision paired with material intuition — wood behaves differently by grain, moisture, and age, so a good carpenter reads the material as much as executes a plan. Patient with iterative fitting rather than expecting a perfect first cut.",
+    skillGroups: [
+      {
+        category: "Precision & Prep",
+        skills: ["Wood moisture verification", "Surface levelling", "Material yield optimization"],
+      },
+      {
+        category: "Joinery & Assembly",
+        skills: ["Carcass joinery", "Hardware/hinge alignment", "Laminate pressing"],
+      },
+    ],
     skills: [
       "Measurement & joinery",
       "Hand & power tool handling",
@@ -418,6 +458,16 @@ export const TRADES = {
     ],
     mindset:
       "High-consequence precision under physical strain — heat, sparks, fumes make the danger immediate and visible, producing a safety-drilled, checklist-following temperament. Weld quality is personal and craftsman-like; a bad weld is visible and a point of professional pride.",
+    skillGroups: [
+      {
+        category: "Weld Execution",
+        skills: ["Weld penetration control (MIG/TIG/Stick)", "Joint preparation/beveling"],
+      },
+      {
+        category: "Structural & Finish",
+        skills: ["Structural load alignment", "Grinding finishing", "Distortion control"],
+      },
+    ],
     skills: [
       "Arc / MIG / TIG welding",
       "Fabrication drawing reading",
@@ -506,6 +556,16 @@ export const TRADES = {
     ],
     mindset:
       "Systematic and maintenance-minded — a large share of the work is preventive (annual servicing), so HVAC techs think in service cycles more than reactive trades do. Season-driven workload creates intense summer peaks and slower off-season stretches.",
+    skillGroups: [
+      {
+        category: "Diagnostics",
+        skills: ["Refrigerant leak isolation", "Compressor amp draw analysis", "Airflow balancing"],
+      },
+      {
+        category: "Service & Install",
+        skills: ["Vacuum pump evacuation", "Coil cleaning", "Ducting fitment"],
+      },
+    ],
     skills: [
       "Refrigerant handling & safety",
       "Compressor/coil diagnostics",
@@ -589,6 +649,16 @@ export const TRADES = {
     ],
     mindset:
       "Patience with process and surface prep — the unglamorous prep work (sanding, puttying, masking) determines the visible finish. Estimation-minded: sq. ft. and paint-quantity calculation is a daily core skill, not an afterthought.",
+    skillGroups: [
+      {
+        category: "Surface Prep",
+        skills: ["Wall dampness testing", "Putty/primer surface prep"],
+      },
+      {
+        category: "Application & Finish",
+        skills: ["Spray/roller coverage optimization", "Color matching", "Texture finishing"],
+      },
+    ],
     skills: [
       "Surface preparation",
       "Color & finish knowledge",

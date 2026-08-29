@@ -31,6 +31,7 @@ function buildSeed() {
         diagnosticFee: 0,
         riskTags: [],
         checklist: { preJob: {}, completion: {} },
+        requiredSkills: [],
         createdAt: "2026-08-2" + ((i % 9) + 1),
       });
     });

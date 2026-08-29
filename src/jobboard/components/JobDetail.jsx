@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import { STAGES, STAGE_LABEL, TRADES } from "../data/trades";
 import { useStore } from "../store";
+import SkillSelector from "./SkillSelector";
 
 export default function JobDetail({ jobId, onClose }) {
   const {
@@ -27,6 +28,7 @@ export default function JobDetail({ jobId, onClose }) {
     setDiagnosticFee,
     toggleRiskTag,
     toggleChecklistItem,
+    toggleJobSkill,
     markPaid,
     upiId,
     setUpiId,
@@ -133,6 +135,16 @@ export default function JobDetail({ jobId, onClose }) {
                 })}
               </div>
             </div>
+          )}
+
+          {/* Required skills for this specific job — grouped dropdown, distinct
+              from the trade's general skill list in the profile panel */}
+          {t.skillGroups?.length > 0 && (
+            <SkillSelector
+              skillGroups={t.skillGroups}
+              selectedSkills={job.requiredSkills || []}
+              onToggleSkill={(skill) => toggleJobSkill(job.id, skill)}
+            />
           )}
 
           {/* Pre-job safety checklist — shown once scheduled */}
