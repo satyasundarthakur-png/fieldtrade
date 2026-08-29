@@ -92,18 +92,23 @@ export default function JobDetail({ jobId, onClose }) {
 
   return (
     <div className="fixed inset-0 md:static md:inset-auto z-20 flex justify-end bg-charcoal/40 md:bg-transparent">
-      <div className="w-full md:w-[440px] bg-white h-full border-l border-line flex flex-col shadow-xl md:shadow-none">
-        <div className="px-6 py-5 border-b border-line flex items-start justify-between">
+      <div className="w-full md:w-[440px] bg-white dark:bg-[#16181D] h-full border-l border-line dark:border-zinc-800 flex flex-col shadow-xl md:shadow-none">
+        <div className="px-6 py-5 border-b border-line dark:border-zinc-800 flex items-start justify-between">
           <div>
             <p className="font-mono text-[10px] tracking-[0.15em] uppercase text-safety mb-1">
               {STAGE_LABEL[job.stage]} · {t.jobLabel}
             </p>
-            <p className="font-display text-2xl leading-tight text-charcoal">{job.title}</p>
+            <p className="font-display text-2xl leading-tight text-charcoal dark:text-zinc-100">
+              {job.title}
+            </p>
             <p className="text-xs text-steel mt-1">
               {job.client} · {job.address}
             </p>
           </div>
-          <button onClick={onClose} className="text-steel hover:text-charcoal">
+          <button
+            onClick={onClose}
+            className="text-steel hover:text-charcoal dark:hover:text-zinc-100"
+          >
             <X size={18} />
           </button>
         </div>
@@ -126,7 +131,7 @@ export default function JobDetail({ jobId, onClose }) {
                         "text-[11px] border rounded-full px-2.5 py-1 transition-colors",
                         active
                           ? "bg-rose/15 border-rose text-rose"
-                          : "bg-boneDim border-line text-charcoal/60 hover:border-rose/50",
+                          : "bg-boneDim dark:bg-black/30 border-line dark:border-zinc-800 text-charcoal/60 dark:text-zinc-400 hover:border-rose/50",
                       ].join(" ")}
                     >
                       {tag}
@@ -157,7 +162,7 @@ export default function JobDetail({ jobId, onClose }) {
                 {t.checklist.preJob.map((item) => (
                   <label
                     key={item}
-                    className="flex items-center gap-2 text-sm text-charcoal/80 cursor-pointer"
+                    className="flex items-center gap-2 text-sm text-charcoal/80 dark:text-zinc-300 cursor-pointer"
                   >
                     <input
                       type="checkbox"
@@ -182,7 +187,7 @@ export default function JobDetail({ jobId, onClose }) {
                 {completionItems.map((item) => (
                   <label
                     key={item}
-                    className="flex items-center gap-2 text-sm text-charcoal/80 cursor-pointer"
+                    className="flex items-center gap-2 text-sm text-charcoal/80 dark:text-zinc-300 cursor-pointer"
                   >
                     <input
                       type="checkbox"
@@ -213,7 +218,7 @@ export default function JobDetail({ jobId, onClose }) {
                   key={m.id}
                   className="flex items-center justify-between text-sm py-1.5 border-b border-boneDim"
                 >
-                  <span className="text-charcoal">{m.name}</span>
+                  <span className="text-charcoal dark:text-zinc-100">{m.name}</span>
                   <span className="font-mono text-xs text-steel">
                     {m.qty} × ₹{m.unitCost} = ₹{(m.qty * m.unitCost).toLocaleString("en-IN")}
                   </span>
@@ -247,7 +252,7 @@ export default function JobDetail({ jobId, onClose }) {
                   <button
                     key={cm.name}
                     onClick={() => addMaterial(job.id, cm.name, 1, cm.unitCost)}
-                    className="text-[11px] bg-boneDim hover:bg-safety/15 hover:text-safetyDeep border border-line rounded-full px-2.5 py-1 text-charcoal/70 transition-colors"
+                    className="text-[11px] bg-boneDim dark:bg-black/30 hover:bg-safety/15 hover:text-safetyDeep border border-line dark:border-zinc-800 rounded-full px-2.5 py-1 text-charcoal/70 dark:text-zinc-400 transition-colors"
                   >
                     + {cm.name} <span className="text-steel">₹{cm.unitCost}</span>
                   </button>
@@ -260,19 +265,19 @@ export default function JobDetail({ jobId, onClose }) {
                 value={matName}
                 onChange={(e) => setMatName(e.target.value)}
                 placeholder="Item"
-                className="flex-1 border border-line rounded-sm px-2 py-1.5 text-xs focus:border-safety"
+                className="flex-1 border border-line dark:border-zinc-800 dark:bg-[#0d0e11] dark:text-zinc-100 rounded-sm px-2 py-1.5 text-xs focus:border-safety"
               />
               <input
                 value={matQty}
                 onChange={(e) => setMatQty(e.target.value)}
                 placeholder="Qty"
-                className="w-14 border border-line rounded-sm px-2 py-1.5 text-xs focus:border-safety"
+                className="w-14 border border-line dark:border-zinc-800 dark:bg-[#0d0e11] dark:text-zinc-100 rounded-sm px-2 py-1.5 text-xs focus:border-safety"
               />
               <input
                 value={matCost}
                 onChange={(e) => setMatCost(e.target.value)}
                 placeholder="₹/unit"
-                className="w-16 border border-line rounded-sm px-2 py-1.5 text-xs focus:border-safety"
+                className="w-16 border border-line dark:border-zinc-800 dark:bg-[#0d0e11] dark:text-zinc-100 rounded-sm px-2 py-1.5 text-xs focus:border-safety"
               />
               <button
                 onClick={handleAddMaterial}
@@ -294,7 +299,7 @@ export default function JobDetail({ jobId, onClose }) {
                 type="number"
                 value={job.diagnosticFee || 0}
                 onChange={(e) => setDiagnosticFee(job.id, Number(e.target.value) || 0)}
-                className="w-32 border border-line rounded-sm px-2 py-1.5 text-sm focus:border-safety"
+                className="w-32 border border-line dark:border-zinc-800 dark:bg-[#0d0e11] dark:text-zinc-100 rounded-sm px-2 py-1.5 text-sm focus:border-safety"
               />
               <span className="text-[11px] text-steel/60">
                 charged for finding the issue, separate from the fix
@@ -313,7 +318,7 @@ export default function JobDetail({ jobId, onClose }) {
                   <button
                     key={lp.label}
                     onClick={() => addLaborPreset(job.id, lp.amount)}
-                    className="text-[11px] bg-boneDim hover:bg-safety/15 hover:text-safetyDeep border border-line rounded-full px-2.5 py-1 text-charcoal/70 transition-colors"
+                    className="text-[11px] bg-boneDim dark:bg-black/30 hover:bg-safety/15 hover:text-safetyDeep border border-line dark:border-zinc-800 rounded-full px-2.5 py-1 text-charcoal/70 dark:text-zinc-400 transition-colors"
                   >
                     + {lp.label} <span className="text-steel">₹{lp.amount}</span>
                   </button>
@@ -326,7 +331,7 @@ export default function JobDetail({ jobId, onClose }) {
                 type="number"
                 value={job.laborCost}
                 onChange={(e) => setLabor(job.id, Number(e.target.value) || 0)}
-                className="w-32 border border-line rounded-sm px-2 py-1.5 text-sm focus:border-safety"
+                className="w-32 border border-line dark:border-zinc-800 dark:bg-[#0d0e11] dark:text-zinc-100 rounded-sm px-2 py-1.5 text-sm focus:border-safety"
               />
               <span className="text-[11px] text-steel/60">
                 tap presets above to add, or edit directly
@@ -339,7 +344,7 @@ export default function JobDetail({ jobId, onClose }) {
             <p className="font-mono text-[10px] tracking-[0.15em] uppercase text-steel mb-2.5">
               Before / after photos
             </p>
-            <button className="w-full border-2 border-dashed border-line rounded-md py-6 flex flex-col items-center gap-2 text-steel/60 hover:border-safety/50 hover:text-safety transition-colors">
+            <button className="w-full border-2 border-dashed border-line dark:border-zinc-800 rounded-md py-6 flex flex-col items-center gap-2 text-steel/60 hover:border-safety/50 hover:text-safety transition-colors">
               <Camera size={20} />
               <span className="text-xs">
                 {job.photos > 0 ? `${job.photos} photos attached` : "Attach site photos"}
@@ -348,7 +353,7 @@ export default function JobDetail({ jobId, onClose }) {
           </div>
 
           {/* Total */}
-          <div className="bg-boneDim rounded-md p-4">
+          <div className="bg-boneDim dark:bg-black/30 rounded-md p-4">
             <div className="flex justify-between text-xs text-steel mb-1">
               <span>Materials</span>
               <span>₹{job.materialsTotal.toLocaleString("en-IN")}</span>
@@ -363,7 +368,7 @@ export default function JobDetail({ jobId, onClose }) {
               <span>Labor</span>
               <span>₹{job.laborCost.toLocaleString("en-IN")}</span>
             </div>
-            <div className="flex justify-between font-display text-xl text-charcoal pt-2 border-t border-line">
+            <div className="flex justify-between font-display text-xl text-charcoal dark:text-zinc-100 pt-2 border-t border-line dark:border-zinc-800">
               <span>Total</span>
               <span>₹{total.toLocaleString("en-IN")}</span>
             </div>
@@ -379,13 +384,13 @@ export default function JobDetail({ jobId, onClose }) {
                 value={businessName}
                 onChange={(e) => setBusinessName(e.target.value)}
                 placeholder="Your business name"
-                className="flex-1 border border-line rounded-sm px-2 py-1.5 text-xs focus:border-safety"
+                className="flex-1 border border-line dark:border-zinc-800 dark:bg-[#0d0e11] dark:text-zinc-100 rounded-sm px-2 py-1.5 text-xs focus:border-safety"
               />
               <input
                 value={upiId}
                 onChange={(e) => setUpiId(e.target.value)}
                 placeholder="your-upi@bank"
-                className="flex-1 border border-line rounded-sm px-2 py-1.5 text-xs focus:border-safety"
+                className="flex-1 border border-line dark:border-zinc-800 dark:bg-[#0d0e11] dark:text-zinc-100 rounded-sm px-2 py-1.5 text-xs focus:border-safety"
               />
             </div>
             <div className="grid grid-cols-2 gap-2">
@@ -422,7 +427,7 @@ export default function JobDetail({ jobId, onClose }) {
                 "w-full mt-2 flex items-center justify-center gap-1.5 rounded-sm py-2 text-xs font-medium border transition-colors",
                 job.paidAt
                   ? "bg-ok/10 border-ok text-ok"
-                  : "bg-white border-line text-steel hover:border-ok hover:text-ok",
+                  : "bg-white border-line dark:border-zinc-800 text-steel hover:border-ok hover:text-ok",
               ].join(" ")}
             >
               <Check size={14} />
@@ -433,7 +438,7 @@ export default function JobDetail({ jobId, onClose }) {
           </div>
         </div>
 
-        <div className="px-6 py-4 border-t border-line">
+        <div className="px-6 py-4 border-t border-line dark:border-zinc-800">
           {nextStage ? (
             <button
               onClick={() => !gateMove && moveJob(job.id, nextStage)}

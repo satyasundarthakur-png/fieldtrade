@@ -9,14 +9,14 @@ function Shell() {
   const [selectedId, setSelectedId] = useState(null);
 
   return (
-    <div className="h-screen flex flex-col bg-bone">
+    <div className="h-screen flex flex-col bg-bone dark:bg-[#0d0e11] transition-colors">
       <TradeStrip />
-      <div className="px-4 md:px-8 py-5 flex items-end justify-between border-b border-line">
+      <div className="px-4 md:px-8 py-5 flex items-end justify-between border-b border-line dark:border-zinc-800">
         <div>
           <p className="font-mono text-[10px] tracking-[0.2em] uppercase text-safety mb-1">
             Job Board
           </p>
-          <h1 className="font-display text-4xl uppercase tracking-wide text-charcoal">
+          <h1 className="font-display text-4xl uppercase tracking-wide text-charcoal dark:text-zinc-100">
             Today's Work
           </h1>
         </div>

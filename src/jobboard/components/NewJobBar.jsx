@@ -21,7 +21,7 @@ export default function NewJobBar() {
   };
 
   return (
-    <div className="border-b border-line px-4 md:px-8 py-3 flex items-center gap-3 flex-wrap">
+    <div className="border-b border-line dark:border-zinc-800 px-4 md:px-8 py-3 flex items-center gap-3 flex-wrap">
       {!open ? (
         <button
           onClick={() => setOpen(true)}
@@ -35,19 +35,19 @@ export default function NewJobBar() {
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             placeholder="Job title"
-            className="border border-line rounded-sm px-2.5 py-1.5 text-sm flex-1 min-w-[140px] focus:border-safety"
+            className="border border-line dark:border-zinc-700 dark:bg-[#16181D] dark:text-zinc-100 rounded-sm px-2.5 py-1.5 text-sm flex-1 min-w-[140px] focus:border-safety"
           />
           <input
             value={client}
             onChange={(e) => setClient(e.target.value)}
             placeholder="Client name"
-            className="border border-line rounded-sm px-2.5 py-1.5 text-sm w-36 focus:border-safety"
+            className="border border-line dark:border-zinc-700 dark:bg-[#16181D] dark:text-zinc-100 rounded-sm px-2.5 py-1.5 text-sm w-36 focus:border-safety"
           />
           <input
             value={address}
             onChange={(e) => setAddress(e.target.value)}
             placeholder="Address"
-            className="border border-line rounded-sm px-2.5 py-1.5 text-sm w-36 focus:border-safety"
+            className="border border-line dark:border-zinc-700 dark:bg-[#16181D] dark:text-zinc-100 rounded-sm px-2.5 py-1.5 text-sm w-36 focus:border-safety"
           />
           <button
             onClick={handleAdd}

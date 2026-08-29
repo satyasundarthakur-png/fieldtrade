@@ -28,6 +28,8 @@
   --color-safetyDeep: #c44a1f;
   --color-steel: #5c6670;
   --color-ok: #4a7856;
+  --color-amber: #c68b3e;
+  --color-rose: #b25757;
   --color-line: #d9d4c6;
   --font-display: "Barlow Condensed", sans-serif;
   --font-body: "Inter", sans-serif;
@@ -167,6 +169,14 @@
       animation-duration: 0.01ms !important;
       transition-duration: 0.01ms !important;
     }
+  }
+
+  /* Tactical dark mode — opt-in via toggle, not a media-query default.
+     Bright/high-contrast stays the default because it reads better
+     outdoors in direct sun; dark is offered for indoor/evening use. */
+  .dark body {
+    background-color: #0d0e11;
+    color: #e4e4e0;
   }
 }
 

@@ -3,6 +3,7 @@ import { Info } from "lucide-react";
 import { TRADES, TRADE_ORDER } from "../data/trades";
 import { useStore } from "../store";
 import TradeProfile from "./TradeProfile";
+import ThemeToggle from "./ThemeToggle";
 
 export default function TradeStrip() {
   const { trade, setTrade } = useStore();
@@ -40,6 +41,7 @@ export default function TradeStrip() {
         >
           <Info size={14} /> <span className="hidden sm:inline">About this trade</span>
         </button>
+        <ThemeToggle />
       </div>
       {profileOpen && <TradeProfile onClose={() => setProfileOpen(false)} />}
     </>
