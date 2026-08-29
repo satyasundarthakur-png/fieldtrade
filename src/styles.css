@@ -152,7 +152,20 @@
   }
 
   body {
-    background-color: var(--color-background);
-    color: var(--color-foreground);
+    background-color: var(--color-bone);
+    color: var(--color-charcoal);
+    font-family: var(--font-body);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-safety);
+    outline-offset: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
   }
 }
