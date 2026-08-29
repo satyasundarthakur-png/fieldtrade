@@ -1,12 +1,15 @@
 import React from "react";
-import { Camera, MapPin, IndianRupee } from "lucide-react";
+import { Camera, MapPin, IndianRupee, AlertTriangle } from "lucide-react";
 import { STAGES, STAGE_LABEL, TRADES } from "../data/trades";
 import { useStore } from "../store";
 
 export default function JobBoard({ onSelect }) {
   const { trade, jobs } = useStore();
   const t = TRADES[trade];
-  const grandTotal = jobs.reduce((sum, j) => sum + j.laborCost + j.materialsTotal, 0);
+  const grandTotal = jobs.reduce(
+    (sum, j) => sum + j.laborCost + j.materialsTotal + (j.diagnosticFee || 0),
+    0,
+  );
 
   return (
     <div className="flex-1 min-h-0 overflow-x-auto flex flex-col">
@@ -36,16 +39,26 @@ export default function JobBoard({ onSelect }) {
               </div>
               <div className="flex-1 overflow-y-auto px-3 py-3 space-y-2.5">
                 {stageJobs.map((job) => {
-                  const total = job.laborCost + job.materialsTotal;
+                  const total = job.laborCost + job.materialsTotal + (job.diagnosticFee || 0);
+                  const hasRisk = job.riskTags?.length > 0;
                   return (
                     <button
                       key={job.id}
                       onClick={() => onSelect(job.id)}
                       className="w-full text-left bg-white border border-line rounded-md p-3.5 hover:border-safety/60 hover:shadow-sm transition-all"
                     >
-                      <p className="font-medium text-sm text-charcoal leading-snug mb-1.5">
-                        {job.title}
-                      </p>
+                      <div className="flex items-start justify-between gap-2 mb-1.5">
+                        <p className="font-medium text-sm text-charcoal leading-snug">
+                          {job.title}
+                        </p>
+                        {hasRisk && (
+                          <AlertTriangle
+                            size={13}
+                            className="text-rose shrink-0 mt-0.5"
+                            title={`${job.riskTags.length} risk factor(s) flagged`}
+                          />
+                        )}
+                      </div>
                       <p className="text-xs text-steel mb-0.5">{job.client}</p>
                       <p className="text-xs text-steel/70 flex items-center gap-1 mb-2.5">
                         <MapPin size={10} /> {job.address}

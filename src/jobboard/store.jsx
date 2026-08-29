@@ -30,6 +30,9 @@ export function StoreProvider({ children }) {
         materialsTotal: 0,
         photos: 0,
         paidAt: null,
+        diagnosticFee: 0,
+        riskTags: [],
+        checklist: { preJob: {}, completion: {} },
         createdAt: new Date().toISOString().slice(0, 10),
       },
     ]);
@@ -50,6 +53,29 @@ export function StoreProvider({ children }) {
     );
   }, []);
 
+  const addKit = useCallback((jobId, kit) => {
+    setJobs((prev) =>
+      prev.map((j) => {
+        if (j.id !== jobId) return j;
+        let materials = [...j.materials];
+        kit.items.forEach((item) => {
+          const qty = item.qty || 1;
+          const existing = materials.find(
+            (m) => m.name === item.name && m.unitCost === item.unitCost,
+          );
+          materials = existing
+            ? materials.map((m) => (m === existing ? { ...m, qty: m.qty + qty } : m))
+            : [
+                ...materials,
+                { id: `m${Date.now()}${item.name}`, name: item.name, qty, unitCost: item.unitCost },
+              ];
+        });
+        const materialsTotal = materials.reduce((sum, m) => sum + m.qty * m.unitCost, 0);
+        return { ...j, materials, materialsTotal };
+      }),
+    );
+  }, []);
+
   const addLaborPreset = useCallback((jobId, amount) => {
     setJobs((prev) =>
       prev.map((j) => (j.id === jobId ? { ...j, laborCost: j.laborCost + amount } : j)),
@@ -58,6 +84,36 @@ export function StoreProvider({ children }) {
 
   const setLabor = useCallback((jobId, laborCost) => {
     setJobs((prev) => prev.map((j) => (j.id === jobId ? { ...j, laborCost } : j)));
+  }, []);
+
+  const setDiagnosticFee = useCallback((jobId, diagnosticFee) => {
+    setJobs((prev) => prev.map((j) => (j.id === jobId ? { ...j, diagnosticFee } : j)));
+  }, []);
+
+  const toggleRiskTag = useCallback((jobId, tag) => {
+    setJobs((prev) =>
+      prev.map((j) => {
+        if (j.id !== jobId) return j;
+        const riskTags = j.riskTags || [];
+        const next = riskTags.includes(tag)
+          ? riskTags.filter((t) => t !== tag)
+          : [...riskTags, tag];
+        return { ...j, riskTags: next };
+      }),
+    );
+  }, []);
+
+  // Checklist items are keyed by their own text (simple, no separate ID scheme
+  // needed since a trade's checklist text is stable and unique per stage).
+  const toggleChecklistItem = useCallback((jobId, phase, item) => {
+    setJobs((prev) =>
+      prev.map((j) => {
+        if (j.id !== jobId) return j;
+        const checklist = j.checklist || { preJob: {}, completion: {} };
+        const phaseState = { ...checklist[phase], [item]: !checklist[phase]?.[item] };
+        return { ...j, checklist: { ...checklist, [phase]: phaseState } };
+      }),
+    );
   }, []);
 
   // Single-tap "paid" toggle — real pattern for closing the loop once a UPI
@@ -83,8 +139,12 @@ export function StoreProvider({ children }) {
     moveJob,
     addJob,
     addMaterial,
+    addKit,
     setLabor,
     addLaborPreset,
+    setDiagnosticFee,
+    toggleRiskTag,
+    toggleChecklistItem,
     markPaid,
     upiId,
     setUpiId,

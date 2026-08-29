@@ -8,6 +8,9 @@ import {
   MessageCircle,
   QrCode,
   Check,
+  AlertTriangle,
+  ClipboardCheck,
+  Package,
 } from "lucide-react";
 import { STAGES, STAGE_LABEL, TRADES } from "../data/trades";
 import { useStore } from "../store";
@@ -18,8 +21,12 @@ export default function JobDetail({ jobId, onClose }) {
     jobs,
     moveJob,
     addMaterial,
+    addKit,
     setLabor,
     addLaborPreset,
+    setDiagnosticFee,
+    toggleRiskTag,
+    toggleChecklistItem,
     markPaid,
     upiId,
     setUpiId,
@@ -34,9 +41,17 @@ export default function JobDetail({ jobId, onClose }) {
 
   if (!job) return null;
 
-  const total = job.laborCost + job.materialsTotal;
+  const total = job.laborCost + job.materialsTotal + (job.diagnosticFee || 0);
   const stageIdx = STAGES.indexOf(job.stage);
   const nextStage = STAGES[stageIdx + 1];
+  const riskTags = job.riskTags || [];
+  const checklist = job.checklist || { preJob: {}, completion: {} };
+
+  // Job completion verification is mandatory before Invoiced, per real trade
+  // standards (voltage test verified, pressure held, etc.) — not just a status flip.
+  const completionItems = t.checklist?.completion || [];
+  const completionDone = completionItems.every((item) => checklist.completion?.[item]);
+  const gateMove = job.stage === "in-progress" && completionItems.length > 0 && !completionDone;
 
   const handleAddMaterial = () => {
     if (!matName.trim() || !matQty || !matCost) return;
@@ -56,6 +71,7 @@ export default function JobDetail({ jobId, onClose }) {
       job.address ? `Address: ${job.address}` : null,
       "",
       ...job.materials.map((m) => `${m.name} — ${m.qty} × ₹${m.unitCost} = ₹${m.qty * m.unitCost}`),
+      job.diagnosticFee ? `Diagnostic/visit fee — ₹${job.diagnosticFee}` : null,
       job.laborCost ? `Labor — ₹${job.laborCost}` : null,
       "",
       `*Total: ₹${total.toLocaleString("en-IN")}*`,
@@ -91,6 +107,89 @@ export default function JobDetail({ jobId, onClose }) {
         </div>
 
         <div className="flex-1 overflow-y-auto px-6 py-5 space-y-6">
+          {/* Risk & complexity tags — pricing risk, not just labor hours */}
+          {t.riskTags?.length > 0 && (
+            <div>
+              <p className="font-mono text-[10px] tracking-[0.15em] uppercase text-steel mb-2.5 flex items-center gap-1.5">
+                <AlertTriangle size={12} /> Risk & complexity
+              </p>
+              <div className="flex flex-wrap gap-1.5">
+                {t.riskTags.map((tag) => {
+                  const active = riskTags.includes(tag);
+                  return (
+                    <button
+                      key={tag}
+                      onClick={() => toggleRiskTag(job.id, tag)}
+                      className={[
+                        "text-[11px] border rounded-full px-2.5 py-1 transition-colors",
+                        active
+                          ? "bg-rose/15 border-rose text-rose"
+                          : "bg-boneDim border-line text-charcoal/60 hover:border-rose/50",
+                      ].join(" ")}
+                    >
+                      {tag}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+
+          {/* Pre-job safety checklist — shown once scheduled */}
+          {job.stage !== "quoted" && t.checklist?.preJob?.length > 0 && (
+            <div>
+              <p className="font-mono text-[10px] tracking-[0.15em] uppercase text-steel mb-2.5 flex items-center gap-1.5">
+                <ClipboardCheck size={12} /> Pre-job safety check
+              </p>
+              <div className="space-y-1.5">
+                {t.checklist.preJob.map((item) => (
+                  <label
+                    key={item}
+                    className="flex items-center gap-2 text-sm text-charcoal/80 cursor-pointer"
+                  >
+                    <input
+                      type="checkbox"
+                      checked={!!checklist.preJob?.[item]}
+                      onChange={() => toggleChecklistItem(job.id, "preJob", item)}
+                      className="accent-safety w-4 h-4"
+                    />
+                    {item}
+                  </label>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Completion verification — mandatory before Invoiced */}
+          {job.stage === "in-progress" && completionItems.length > 0 && (
+            <div>
+              <p className="font-mono text-[10px] tracking-[0.15em] uppercase text-steel mb-2.5 flex items-center gap-1.5">
+                <ClipboardCheck size={12} /> Completion verification
+              </p>
+              <div className="space-y-1.5">
+                {completionItems.map((item) => (
+                  <label
+                    key={item}
+                    className="flex items-center gap-2 text-sm text-charcoal/80 cursor-pointer"
+                  >
+                    <input
+                      type="checkbox"
+                      checked={!!checklist.completion?.[item]}
+                      onChange={() => toggleChecklistItem(job.id, "completion", item)}
+                      className="accent-ok w-4 h-4"
+                    />
+                    {item}
+                  </label>
+                ))}
+              </div>
+              {!completionDone && (
+                <p className="text-[11px] text-amber mt-1.5">
+                  All items must be checked before moving to Invoiced.
+                </p>
+              )}
+            </div>
+          )}
+
           {/* Materials */}
           <div>
             <p className="font-mono text-[10px] tracking-[0.15em] uppercase text-steel mb-2.5">
@@ -113,7 +212,23 @@ export default function JobDetail({ jobId, onClose }) {
               )}
             </div>
 
-            {/* One-tap presets — fast-track field quoting, no typing needed */}
+            {/* Whole-kit one-tap population — for a standard job, avoid adding
+                5-6 items one at a time on a small keyboard */}
+            {t.commonKits?.length > 0 && (
+              <div className="flex flex-wrap gap-1.5 mb-2">
+                {t.commonKits.map((kit) => (
+                  <button
+                    key={kit.name}
+                    onClick={() => addKit(job.id, kit)}
+                    className="text-[11px] bg-charcoal text-bone rounded-full px-2.5 py-1 flex items-center gap-1 hover:bg-charcoalSoft transition-colors"
+                  >
+                    <Package size={11} /> {kit.name}
+                  </button>
+                ))}
+              </div>
+            )}
+
+            {/* One-tap single-item presets — fast-track field quoting */}
             {t.commonMaterials?.length > 0 && (
               <div className="flex flex-wrap gap-1.5 mb-2.5">
                 {t.commonMaterials.map((cm) => (
@@ -153,6 +268,25 @@ export default function JobDetail({ jobId, onClose }) {
               >
                 <Plus size={14} />
               </button>
+            </div>
+          </div>
+
+          {/* Diagnostic / visit fee — separate from execution quote, real trade pricing pattern */}
+          <div>
+            <p className="font-mono text-[10px] tracking-[0.15em] uppercase text-steel mb-2.5">
+              Diagnostic / visit fee
+            </p>
+            <div className="flex items-center gap-2">
+              <IndianRupee size={14} className="text-steel" />
+              <input
+                type="number"
+                value={job.diagnosticFee || 0}
+                onChange={(e) => setDiagnosticFee(job.id, Number(e.target.value) || 0)}
+                className="w-32 border border-line rounded-sm px-2 py-1.5 text-sm focus:border-safety"
+              />
+              <span className="text-[11px] text-steel/60">
+                charged for finding the issue, separate from the fix
+              </span>
             </div>
           </div>
 
@@ -207,6 +341,12 @@ export default function JobDetail({ jobId, onClose }) {
               <span>Materials</span>
               <span>₹{job.materialsTotal.toLocaleString("en-IN")}</span>
             </div>
+            {job.diagnosticFee > 0 && (
+              <div className="flex justify-between text-xs text-steel mb-1">
+                <span>Diagnostic / visit fee</span>
+                <span>₹{job.diagnosticFee.toLocaleString("en-IN")}</span>
+              </div>
+            )}
             <div className="flex justify-between text-xs text-steel mb-2">
               <span>Labor</span>
               <span>₹{job.laborCost.toLocaleString("en-IN")}</span>
@@ -284,8 +424,14 @@ export default function JobDetail({ jobId, onClose }) {
         <div className="px-6 py-4 border-t border-line">
           {nextStage ? (
             <button
-              onClick={() => moveJob(job.id, nextStage)}
-              className="w-full bg-safety text-white rounded-sm py-2.5 text-sm font-medium flex items-center justify-center gap-2 hover:bg-safetyDeep transition-colors"
+              onClick={() => !gateMove && moveJob(job.id, nextStage)}
+              disabled={gateMove}
+              className={[
+                "w-full rounded-sm py-2.5 text-sm font-medium flex items-center justify-center gap-2 transition-colors",
+                gateMove
+                  ? "bg-line text-steel/50 cursor-not-allowed"
+                  : "bg-safety text-white hover:bg-safetyDeep",
+              ].join(" ")}
             >
               Move to {STAGE_LABEL[nextStage]} <ArrowRight size={15} />
             </button>

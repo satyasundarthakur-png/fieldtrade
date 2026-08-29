@@ -27,6 +27,10 @@ function buildSeed() {
         laborCost,
         materialsTotal,
         photos: stage === "invoiced" || stage === "in-progress" ? 2 : 0,
+        paidAt: stage === "invoiced" ? "2026-08-25T10:00:00.000Z" : null,
+        diagnosticFee: 0,
+        riskTags: [],
+        checklist: { preJob: {}, completion: {} },
         createdAt: "2026-08-2" + ((i % 9) + 1),
       });
     });
