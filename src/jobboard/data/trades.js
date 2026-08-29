@@ -81,11 +81,21 @@ export const TRADES = {
     ],
     mindset:
       "Safety is the organizing principle of everything — a mistake here can kill someone, not just cost money. That produces methodical, rule-bound caution that's earned, not rigid. Thinks in circuits and systems: cause and effect is immediate and physical.",
-    skillGroups: [
+    subdivisions: [
+      {
+        category: "Distribution & Panels",
+        items: ["DB Panel Upgrade", "3-Phase Load Balancing", "Main Isolator Replacement"],
+      },
+      {
+        category: "Wiring & Points",
+        items: ["Full Conduit Rewiring", "Inverter Hookup", "Light & Power Point Installation"],
+      },
       {
         category: "Diagnostics & Testing",
-        skills: ["Load calculation", "Phase balancing", "Circuit tracing", "Earth fault testing"],
+        items: ["Short Circuit Tracing", "Earth Leakage Diagnostic", "Voltage Drop Analysis"],
       },
+    ],
+    skillGroups: [
       {
         category: "Execution & Wiring",
         skills: ["Conduit routing", "DB panel dressing", "Inverter setup", "Short-circuit repair"],
@@ -177,6 +187,20 @@ export const TRADES = {
     ],
     mindset:
       "Usually called when something is already going wrong — a leak, a blockage — so there's urgency and calm-under-mess. Practical, unsentimental, comfortable in cramped and awkward spaces. Thinks several steps ahead because plumbing systems are hidden and interconnected.",
+    subdivisions: [
+      {
+        category: "Concealed Lines",
+        items: [
+          "Hydrostatic Pressure Testing",
+          "Leak Location & Patching",
+          "Drain Line Unclogging",
+        ],
+      },
+      {
+        category: "Fixtures & Valves",
+        items: ["CPVC/PPR Pipe Fitting", "Pressure Pump Installation", "Sanitaryware Mounting"],
+      },
+    ],
     skillGroups: [
       {
         category: "Diagnostics & Testing",
@@ -271,6 +295,20 @@ export const TRADES = {
     ],
     mindset:
       "Diagnostic and systems-thinking, closer to a doctor's differential diagnosis than people expect — a symptom rarely points to one obvious cause. Comfortable with early ambiguity, wants certainty before expensive work. Builds strong brand/model pattern memory through repetition.",
+    subdivisions: [
+      {
+        category: "Engine & Drivetrain",
+        items: ["Full Service", "Timing Belt Replacement", "Engine Diagnostic Check"],
+      },
+      {
+        category: "Brakes & Suspension",
+        items: ["Brake Pad Replacement", "Suspension Overhaul", "Wheel Alignment"],
+      },
+      {
+        category: "Electrical & AC",
+        items: ["Battery/Alternator Check", "AC Gas Refill", "Wiring Fault Diagnosis"],
+      },
+    ],
     skillGroups: [
       {
         category: "Diagnostics",
@@ -365,6 +403,20 @@ export const TRADES = {
     ],
     mindset:
       "Precision paired with material intuition — wood behaves differently by grain, moisture, and age, so a good carpenter reads the material as much as executes a plan. Patient with iterative fitting rather than expecting a perfect first cut.",
+    subdivisions: [
+      {
+        category: "Storage & Modular",
+        items: ["Wardrobe (3-door)", "Modular Kitchen Cabinets", "Shoe/Storage Unit"],
+      },
+      {
+        category: "Furniture & Fixtures",
+        items: ["Study Table + Shelving", "TV Unit", "Bed with Storage"],
+      },
+      {
+        category: "Repair & Fit",
+        items: ["Hinge/Drawer Repair", "Door Alignment Fix", "Laminate Re-pressing"],
+      },
+    ],
     skillGroups: [
       {
         category: "Precision & Prep",
@@ -458,6 +510,20 @@ export const TRADES = {
     ],
     mindset:
       "High-consequence precision under physical strain — heat, sparks, fumes make the danger immediate and visible, producing a safety-drilled, checklist-following temperament. Weld quality is personal and craftsman-like; a bad weld is visible and a point of professional pride.",
+    subdivisions: [
+      {
+        category: "Structural & Frames",
+        items: ["Shed Frame Welding", "Heavy I-Beam Fabrication", "Truss Assembly"],
+      },
+      {
+        category: "Architectural & Ornamental",
+        items: ["Staircase Railing", "Gate + Grill Fabrication", "Window Grille Fitment"],
+      },
+      {
+        category: "Repair & Reinforcement",
+        items: ["Hinge & Latch Patching", "Cracked Joint Welding", "Rust Cut-Out & Plate Weld"],
+      },
+    ],
     skillGroups: [
       {
         category: "Weld Execution",
@@ -556,6 +622,20 @@ export const TRADES = {
     ],
     mindset:
       "Systematic and maintenance-minded — a large share of the work is preventive (annual servicing), so HVAC techs think in service cycles more than reactive trades do. Season-driven workload creates intense summer peaks and slower off-season stretches.",
+    subdivisions: [
+      {
+        category: "Installation",
+        items: ["Split AC Installation", "Ducting Setup", "Multi-Unit Commercial Install"],
+      },
+      {
+        category: "Service & Maintenance",
+        items: ["Annual Maintenance", "Gas Refill & Leak Check", "Filter/Coil Cleaning"],
+      },
+      {
+        category: "Repair",
+        items: ["Compressor Replacement", "PCB/Electronics Fault", "No-Cooling Diagnostic"],
+      },
+    ],
     skillGroups: [
       {
         category: "Diagnostics",
@@ -649,6 +729,20 @@ export const TRADES = {
     ],
     mindset:
       "Patience with process and surface prep — the unglamorous prep work (sanding, puttying, masking) determines the visible finish. Estimation-minded: sq. ft. and paint-quantity calculation is a daily core skill, not an afterthought.",
+    subdivisions: [
+      {
+        category: "Interior",
+        items: ["Full House Interior", "Single Room Repaint", "Ceiling/Texture Work"],
+      },
+      {
+        category: "Exterior",
+        items: ["Full Exterior Repaint", "Waterproof Coating", "Boundary Wall Painting"],
+      },
+      {
+        category: "Touch-Up & Repair",
+        items: ["Damp Patch Repair", "Office Touch-Up", "Crack Filling & Repaint"],
+      },
+    ],
     skillGroups: [
       {
         category: "Surface Prep",
