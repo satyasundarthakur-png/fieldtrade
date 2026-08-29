@@ -15,11 +15,14 @@ export const Route = createFileRoute("/")({
       { property: "og:title", content: "Job Board — Trade Ops" },
       {
         property: "og:description",
-        content:
-          "Daily job board for trade businesses. Track jobs from quote to invoice.",
+        content: "Daily job board for trade businesses. Track jobs from quote to invoice.",
       },
       { property: "og:type", content: "website" },
+      { property: "og:image", content: "https://fieldtrade.lovable.app/og-image.png" },
+      { property: "og:image:width", content: "1200" },
+      { property: "og:image:height", content: "630" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:image", content: "https://fieldtrade.lovable.app/og-image.png" },
     ],
   }),
   component: Index,

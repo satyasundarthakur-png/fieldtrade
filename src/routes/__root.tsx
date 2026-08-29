@@ -80,17 +80,20 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { title: "Job Board — Trade Ops" },
       {
         name: "description",
-        content:
-          "Daily job board for trade businesses — track jobs from quote to invoice.",
+        content: "Daily job board for trade businesses — track jobs from quote to invoice.",
       },
       { property: "og:title", content: "Job Board — Trade Ops" },
       {
         property: "og:description",
-        content:
-          "Daily job board for trade businesses — track jobs from quote to invoice.",
+        content: "Daily job board for trade businesses — track jobs from quote to invoice.",
       },
       { property: "og:type", content: "website" },
+      { property: "og:image", content: "https://fieldtrade.lovable.app/og-image.png" },
+      { property: "og:image:width", content: "1200" },
+      { property: "og:image:height", content: "630" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:image", content: "https://fieldtrade.lovable.app/og-image.png" },
+      { name: "theme-color", content: "#171717" },
     ],
     links: [
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -104,6 +107,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         href: appCss,
       },
       { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
+      { rel: "icon", href: "/favicon-32x32.png", type: "image/png", sizes: "32x32" },
+      { rel: "icon", href: "/favicon-16x16.png", type: "image/png", sizes: "16x16" },
+      { rel: "apple-touch-icon", href: "/apple-touch-icon.png" },
+      { rel: "manifest", href: "/manifest.webmanifest" },
     ],
   }),
   shellComponent: RootShell,

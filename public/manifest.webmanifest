@@ -1,0 +1,13 @@
+{
+  "name": "Job Board — Trade Ops",
+  "short_name": "Trade Ops",
+  "description": "Daily job board for trade businesses — electricians, plumbers, mechanics, carpenters, welders, HVAC techs and painters. Track jobs from quote to invoice.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#F5F3EE",
+  "theme_color": "#171717",
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}
