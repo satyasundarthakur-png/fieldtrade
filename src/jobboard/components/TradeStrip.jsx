@@ -10,30 +10,32 @@ export default function TradeStrip() {
 
   return (
     <>
-      <div className="bg-charcoal px-4 md:px-8 flex items-center gap-1 overflow-x-auto">
-        {TRADE_ORDER.map((key) => {
-          const t = TRADES[key];
-          const Icon = t.icon;
-          const active = key === trade;
-          return (
-            <button
-              key={key}
-              onClick={() => setTrade(key)}
-              className={[
-                "flex items-center gap-2 px-4 py-3.5 border-b-2 shrink-0 transition-colors font-display text-lg tracking-wide uppercase",
-                active
-                  ? "border-safety text-bone"
-                  : "border-transparent text-bone/40 hover:text-bone/70",
-              ].join(" ")}
-            >
-              <Icon size={15} strokeWidth={2} />
-              {t.label}
-            </button>
-          );
-        })}
+      <div className="bg-charcoal px-4 md:px-8 flex items-center gap-1">
+        <div className="flex items-center gap-1 overflow-x-auto no-scrollbar flex-1 min-w-0">
+          {TRADE_ORDER.map((key) => {
+            const t = TRADES[key];
+            const Icon = t.icon;
+            const active = key === trade;
+            return (
+              <button
+                key={key}
+                onClick={() => setTrade(key)}
+                className={[
+                  "flex items-center gap-2 px-4 py-3.5 border-b-2 shrink-0 transition-colors font-display text-lg tracking-wide uppercase",
+                  active
+                    ? "border-safety text-bone font-semibold"
+                    : "border-transparent text-bone/50 hover:text-bone/80",
+                ].join(" ")}
+              >
+                <Icon size={15} strokeWidth={2} />
+                {t.label}
+              </button>
+            );
+          })}
+        </div>
         <button
           onClick={() => setProfileOpen(true)}
-          className="ml-auto flex items-center gap-1.5 text-bone/40 hover:text-safety text-xs px-3 py-3.5 shrink-0 transition-colors"
+          className="shrink-0 flex items-center gap-1.5 text-bone/60 hover:text-safety text-xs px-3 py-3.5 transition-colors border-l border-bone/10 ml-1"
           title="About this trade"
         >
           <Info size={14} /> <span className="hidden sm:inline">About this trade</span>

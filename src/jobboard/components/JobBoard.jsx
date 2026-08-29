@@ -1,5 +1,5 @@
 import React from "react";
-import { Camera, MapPin, IndianRupee, AlertTriangle } from "lucide-react";
+import { Camera, MapPin, IndianRupee, AlertTriangle, User } from "lucide-react";
 import { STAGES, STAGE_LABEL, TRADES } from "../data/trades";
 import { useStore } from "../store";
 
@@ -13,12 +13,13 @@ export default function JobBoard({ onSelect }) {
 
   return (
     <div className="flex-1 min-h-0 overflow-x-auto flex flex-col">
-      <div className="px-4 md:px-8 py-2 flex items-center justify-between border-b border-line bg-boneDim/40 shrink-0">
-        <span className="text-xs text-steel">
-          Billed per <span className="font-medium text-charcoal">{t.jobUnit}</span>
+      <div className="px-4 md:px-8 py-2.5 flex items-center justify-between border-b border-line bg-boneDim shrink-0">
+        <span className="text-xs font-medium text-charcoal/70">
+          Billed per <span className="font-semibold text-charcoal">{t.jobUnit}</span>
         </span>
         <span className="font-mono text-xs text-charcoal">
-          Pipeline value: <span className="font-medium">₹{grandTotal.toLocaleString("en-IN")}</span>
+          Pipeline value:{" "}
+          <span className="font-bold text-safetyDeep">₹{grandTotal.toLocaleString("en-IN")}</span>
         </span>
       </div>
       <div className="flex h-full min-w-[900px] md:min-w-0">
@@ -27,13 +28,13 @@ export default function JobBoard({ onSelect }) {
           return (
             <div
               key={stage}
-              className="flex-1 border-r border-line last:border-r-0 flex flex-col min-h-0"
+              className="flex-1 border-r border-line last:border-r-0 flex flex-col min-h-0 bg-boneDim/50"
             >
-              <div className="px-4 py-3 border-b border-line flex items-center justify-between shrink-0">
-                <span className="font-display text-lg uppercase tracking-wide text-charcoal">
+              <div className="px-4 py-3 border-b-2 border-charcoal/15 flex items-center justify-between shrink-0 bg-boneDim">
+                <span className="font-display text-lg uppercase tracking-wide text-charcoal font-semibold">
                   {STAGE_LABEL[stage]}
                 </span>
-                <span className="font-mono text-xs text-steel bg-boneDim px-1.5 py-0.5 rounded-sm">
+                <span className="font-mono text-xs font-semibold text-bone bg-charcoal px-2 py-0.5 rounded-full min-w-[22px] text-center">
                   {stageJobs.length}
                 </span>
               </div>
@@ -45,32 +46,34 @@ export default function JobBoard({ onSelect }) {
                     <button
                       key={job.id}
                       onClick={() => onSelect(job.id)}
-                      className="w-full text-left bg-white border border-line rounded-md p-3.5 hover:border-safety/60 hover:shadow-sm transition-all"
+                      className="w-full text-left bg-white border border-line rounded-md p-3.5 shadow-[0_1px_2px_rgba(23,23,23,0.06)] hover:border-safety hover:shadow-[0_2px_8px_rgba(23,23,23,0.12)] transition-all"
                     >
-                      <div className="flex items-start justify-between gap-2 mb-1.5">
-                        <p className="font-medium text-sm text-charcoal leading-snug">
+                      <div className="flex items-start justify-between gap-2 mb-2">
+                        <p className="font-semibold text-[15px] text-charcoal leading-snug">
                           {job.title}
                         </p>
                         {hasRisk && (
                           <AlertTriangle
-                            size={13}
+                            size={14}
                             className="text-rose shrink-0 mt-0.5"
                             title={`${job.riskTags.length} risk factor(s) flagged`}
                           />
                         )}
                       </div>
-                      <p className="text-xs text-steel mb-0.5">{job.client}</p>
-                      <p className="text-xs text-steel/70 flex items-center gap-1 mb-2.5">
-                        <MapPin size={10} /> {job.address}
+                      <p className="text-xs font-medium text-charcoal/70 mb-1 flex items-center gap-1">
+                        <User size={11} className="text-steel" /> {job.client}
                       </p>
-                      <div className="flex items-center justify-between pt-2 border-t border-line/70">
-                        <span className="font-mono text-xs font-medium text-charcoal flex items-center">
-                          <IndianRupee size={11} className="inline" />
+                      <p className="text-xs text-steel flex items-center gap-1 mb-3">
+                        <MapPin size={11} /> {job.address}
+                      </p>
+                      <div className="flex items-center justify-between pt-2.5 border-t border-line">
+                        <span className="font-mono text-base font-bold text-charcoal flex items-center">
+                          <IndianRupee size={14} className="inline" strokeWidth={2.5} />
                           {total.toLocaleString("en-IN")}
                         </span>
                         {job.photos > 0 && (
-                          <span className="flex items-center gap-1 text-[10px] text-steel">
-                            <Camera size={11} /> {job.photos}
+                          <span className="flex items-center gap-1 text-[11px] font-medium bg-boneDim text-steel px-1.5 py-0.5 rounded-sm border border-line">
+                            <Camera size={12} /> {job.photos}
                           </span>
                         )}
                       </div>
