@@ -1,10 +1,20 @@
 import React, { useState } from "react";
-import { X, Plus, Camera, IndianRupee, ArrowRight } from "lucide-react";
+import { X, Plus, Camera, IndianRupee, ArrowRight, MessageCircle, QrCode } from "lucide-react";
 import { STAGES, STAGE_LABEL, TRADES } from "../data/trades";
 import { useStore } from "../store";
 
 export default function JobDetail({ jobId, onClose }) {
-  const { trade, jobs, moveJob, addMaterial, setLabor } = useStore();
+  const {
+    trade,
+    jobs,
+    moveJob,
+    addMaterial,
+    setLabor,
+    upiId,
+    setUpiId,
+    businessName,
+    setBusinessName,
+  } = useStore();
   const t = TRADES[trade];
   const job = jobs.find((j) => j.id === jobId);
   const [matName, setMatName] = useState("");
@@ -24,6 +34,32 @@ export default function JobDetail({ jobId, onClose }) {
     setMatQty("");
     setMatCost("");
   };
+
+  // Real pattern from Vyapar/Khatabook: share the quote/invoice as a WhatsApp
+  // message instead of relying on the client having any app of their own.
+  const buildShareText = () => {
+    const lines = [
+      `*${businessName || "Invoice"}*`,
+      `${t.jobLabel}: ${job.title}`,
+      `Client: ${job.client}`,
+      job.address ? `Address: ${job.address}` : null,
+      "",
+      ...job.materials.map((m) => `${m.name} — ${m.qty} × ₹${m.unitCost} = ₹${m.qty * m.unitCost}`),
+      job.laborCost ? `Labor — ₹${job.laborCost}` : null,
+      "",
+      `*Total: ₹${total.toLocaleString("en-IN")}*`,
+      upiId ? `\nPay via UPI: ${upiId}` : null,
+    ].filter(Boolean);
+    return lines.join("\n");
+  };
+
+  const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(buildShareText())}`;
+
+  // Real pattern from PhonePe/GPay/Paytm-style UPI deep links: upi://pay intent
+  // that opens directly in whichever UPI app the client already has installed.
+  const upiUrl = upiId
+    ? `upi://pay?pa=${encodeURIComponent(upiId)}&pn=${encodeURIComponent(businessName || "Trade Job Board")}&am=${total}&cu=INR&tn=${encodeURIComponent(job.title)}`
+    : null;
 
   return (
     <div className="fixed inset-0 md:static md:inset-auto z-20 flex justify-end bg-charcoal/40 md:bg-transparent">
@@ -136,6 +172,54 @@ export default function JobDetail({ jobId, onClose }) {
               <span>Total</span>
               <span>₹{total.toLocaleString("en-IN")}</span>
             </div>
+          </div>
+
+          {/* WhatsApp share + UPI — the real workflow, not a generic "invoice tool" */}
+          <div>
+            <p className="font-mono text-[10px] tracking-[0.15em] uppercase text-steel mb-2.5">
+              Send to client
+            </p>
+            <div className="flex gap-1.5 mb-2">
+              <input
+                value={businessName}
+                onChange={(e) => setBusinessName(e.target.value)}
+                placeholder="Your business name"
+                className="flex-1 border border-line rounded-sm px-2 py-1.5 text-xs focus:border-safety"
+              />
+              <input
+                value={upiId}
+                onChange={(e) => setUpiId(e.target.value)}
+                placeholder="your-upi@bank"
+                className="flex-1 border border-line rounded-sm px-2 py-1.5 text-xs focus:border-safety"
+              />
+            </div>
+            <div className="grid grid-cols-2 gap-2">
+              <a
+                href={whatsappUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-center gap-1.5 bg-ok text-white rounded-sm py-2 text-xs font-medium hover:opacity-90 transition-opacity"
+              >
+                <MessageCircle size={14} /> Share on WhatsApp
+              </a>
+              <a
+                href={upiUrl || "#"}
+                onClick={(e) => !upiUrl && e.preventDefault()}
+                className={[
+                  "flex items-center justify-center gap-1.5 rounded-sm py-2 text-xs font-medium transition-opacity",
+                  upiUrl
+                    ? "bg-charcoal text-bone hover:opacity-90"
+                    : "bg-line text-steel/50 cursor-not-allowed",
+                ].join(" ")}
+              >
+                <QrCode size={14} /> Request via UPI
+              </a>
+            </div>
+            {!upiId && (
+              <p className="text-[10px] text-steel/50 mt-1.5">
+                Add your UPI ID above to enable direct payment requests.
+              </p>
+            )}
           </div>
         </div>
 

@@ -7,6 +7,8 @@ const StoreContext = createContext(null);
 export function StoreProvider({ children }) {
   const [trade, setTrade] = useState(TRADE_ORDER[0]);
   const [jobs, setJobs] = useState(SEED_JOBS);
+  const [upiId, setUpiId] = useState("");
+  const [businessName, setBusinessName] = useState("");
 
   const moveJob = useCallback((jobId, newStage) => {
     setJobs((prev) => prev.map((j) => (j.id === jobId ? { ...j, stage: newStage } : j)));
@@ -56,6 +58,10 @@ export function StoreProvider({ children }) {
     addJob,
     addMaterial,
     setLabor,
+    upiId,
+    setUpiId,
+    businessName,
+    setBusinessName,
   };
 
   return <StoreContext.Provider value={value}>{children}</StoreContext.Provider>;
