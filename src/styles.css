@@ -19,8 +19,22 @@
  */
 
 @theme inline {
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
+  /* Trade Job Board design tokens (ported from the uploaded app's theme) */
+  --color-charcoal: #171717;
+  --color-charcoalSoft: #262626;
+  --color-bone: #f5f3ee;
+  --color-boneDim: #e8e4d9;
+  --color-safety: #e85d2c;
+  --color-safetyDeep: #c44a1f;
+  --color-steel: #5c6670;
+  --color-ok: #4a7856;
+  --color-line: #d9d4c6;
+  --font-display: "Barlow Condensed", sans-serif;
+  --font-body: "Inter", sans-serif;
+  --font-mono: "IBM Plex Mono", monospace;
+
+  --radius-sm: 3px;
+  --radius-md: 6px;
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
   --radius-2xl: calc(var(--radius) + 8px);
@@ -138,7 +152,20 @@
   }
 
   body {
-    background-color: var(--color-background);
-    color: var(--color-foreground);
+    background-color: var(--color-bone);
+    color: var(--color-charcoal);
+    font-family: var(--font-body);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-safety);
+    outline-offset: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
   }
 }
