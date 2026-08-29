@@ -1,27 +1,29 @@
-import React, { useState } from 'react'
-import { X, Plus, Camera, IndianRupee, ArrowRight } from 'lucide-react'
-import { STAGES, STAGE_LABEL, TRADES } from '../data/trades'
-import { useStore } from '../store'
+import React, { useState } from "react";
+import { X, Plus, Camera, IndianRupee, ArrowRight } from "lucide-react";
+import { STAGES, STAGE_LABEL, TRADES } from "../data/trades";
+import { useStore } from "../store";
 
 export default function JobDetail({ jobId, onClose }) {
-  const { trade, jobs, moveJob, addMaterial, setLabor } = useStore()
-  const t = TRADES[trade]
-  const job = jobs.find((j) => j.id === jobId)
-  const [matName, setMatName] = useState('')
-  const [matQty, setMatQty] = useState('')
-  const [matCost, setMatCost] = useState('')
+  const { trade, jobs, moveJob, addMaterial, setLabor } = useStore();
+  const t = TRADES[trade];
+  const job = jobs.find((j) => j.id === jobId);
+  const [matName, setMatName] = useState("");
+  const [matQty, setMatQty] = useState("");
+  const [matCost, setMatCost] = useState("");
 
-  if (!job) return null
+  if (!job) return null;
 
-  const total = job.laborCost + job.materialsTotal
-  const stageIdx = STAGES.indexOf(job.stage)
-  const nextStage = STAGES[stageIdx + 1]
+  const total = job.laborCost + job.materialsTotal;
+  const stageIdx = STAGES.indexOf(job.stage);
+  const nextStage = STAGES[stageIdx + 1];
 
   const handleAddMaterial = () => {
-    if (!matName.trim() || !matQty || !matCost) return
-    addMaterial(job.id, matName.trim(), Number(matQty), Number(matCost))
-    setMatName(''); setMatQty(''); setMatCost('')
-  }
+    if (!matName.trim() || !matQty || !matCost) return;
+    addMaterial(job.id, matName.trim(), Number(matQty), Number(matCost));
+    setMatName("");
+    setMatQty("");
+    setMatCost("");
+  };
 
   return (
     <div className="fixed inset-0 md:static md:inset-auto z-20 flex justify-end bg-charcoal/40 md:bg-transparent">
@@ -32,7 +34,9 @@ export default function JobDetail({ jobId, onClose }) {
               {STAGE_LABEL[job.stage]} · {t.jobLabel}
             </p>
             <p className="font-display text-2xl leading-tight text-charcoal">{job.title}</p>
-            <p className="text-xs text-steel mt-1">{job.client} · {job.address}</p>
+            <p className="text-xs text-steel mt-1">
+              {job.client} · {job.address}
+            </p>
           </div>
           <button onClick={onClose} className="text-steel hover:text-charcoal">
             <X size={18} />
@@ -47,10 +51,13 @@ export default function JobDetail({ jobId, onClose }) {
             </p>
             <div className="space-y-1.5 mb-3">
               {job.materials.map((m) => (
-                <div key={m.id} className="flex items-center justify-between text-sm py-1.5 border-b border-boneDim">
+                <div
+                  key={m.id}
+                  className="flex items-center justify-between text-sm py-1.5 border-b border-boneDim"
+                >
                   <span className="text-charcoal">{m.name}</span>
                   <span className="font-mono text-xs text-steel">
-                    {m.qty} × ₹{m.unitCost} = ₹{(m.qty * m.unitCost).toLocaleString('en-IN')}
+                    {m.qty} × ₹{m.unitCost} = ₹{(m.qty * m.unitCost).toLocaleString("en-IN")}
                   </span>
                 </div>
               ))}
@@ -77,7 +84,10 @@ export default function JobDetail({ jobId, onClose }) {
                 placeholder="₹/unit"
                 className="w-16 border border-line rounded-sm px-2 py-1.5 text-xs focus:border-safety"
               />
-              <button onClick={handleAddMaterial} className="bg-charcoal text-bone px-2.5 rounded-sm">
+              <button
+                onClick={handleAddMaterial}
+                className="bg-charcoal text-bone px-2.5 rounded-sm"
+              >
                 <Plus size={14} />
               </button>
             </div>
@@ -85,7 +95,9 @@ export default function JobDetail({ jobId, onClose }) {
 
           {/* Labor */}
           <div>
-            <p className="font-mono text-[10px] tracking-[0.15em] uppercase text-steel mb-2.5">Labor cost</p>
+            <p className="font-mono text-[10px] tracking-[0.15em] uppercase text-steel mb-2.5">
+              Labor cost
+            </p>
             <div className="flex items-center gap-2">
               <IndianRupee size={14} className="text-steel" />
               <input
@@ -104,20 +116,25 @@ export default function JobDetail({ jobId, onClose }) {
             </p>
             <button className="w-full border-2 border-dashed border-line rounded-md py-6 flex flex-col items-center gap-2 text-steel/60 hover:border-safety/50 hover:text-safety transition-colors">
               <Camera size={20} />
-              <span className="text-xs">{job.photos > 0 ? `${job.photos} photos attached` : 'Attach site photos'}</span>
+              <span className="text-xs">
+                {job.photos > 0 ? `${job.photos} photos attached` : "Attach site photos"}
+              </span>
             </button>
           </div>
 
           {/* Total */}
           <div className="bg-boneDim rounded-md p-4">
             <div className="flex justify-between text-xs text-steel mb-1">
-              <span>Materials</span><span>₹{job.materialsTotal.toLocaleString('en-IN')}</span>
+              <span>Materials</span>
+              <span>₹{job.materialsTotal.toLocaleString("en-IN")}</span>
             </div>
             <div className="flex justify-between text-xs text-steel mb-2">
-              <span>Labor</span><span>₹{job.laborCost.toLocaleString('en-IN')}</span>
+              <span>Labor</span>
+              <span>₹{job.laborCost.toLocaleString("en-IN")}</span>
             </div>
             <div className="flex justify-between font-display text-xl text-charcoal pt-2 border-t border-line">
-              <span>Total</span><span>₹{total.toLocaleString('en-IN')}</span>
+              <span>Total</span>
+              <span>₹{total.toLocaleString("en-IN")}</span>
             </div>
           </div>
         </div>
@@ -136,5 +153,5 @@ export default function JobDetail({ jobId, onClose }) {
         </div>
       </div>
     </div>
-  )
+  );
 }
